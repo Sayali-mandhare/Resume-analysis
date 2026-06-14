@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Resume Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+    h1 { color: #2c3e50; }
+    form { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+    label { display:block; margin-top: 12px; }
+    textarea { width:100%; height:140px; }
+    .result { margin-top: 20px; padding: 12px; background:#f6f8fa; border-radius:6px; }
+    .danger { color: #c0392b; }
+  </style>
+</head>
+<body>
+  <h1>Resume Analyzer</h1>
+  <p>Upload your resume (PDF) and paste the job description. Click Analyze to get match % and missing skills.</p>
+
+  <form method="post" enctype="multipart/form-data">
+    <label>Upload Resume (PDF):
+      <input type="file" name="resume" accept=".pdf" required>
+    </label>
+
+    <label>Job Description (paste here):
+      <textarea name="jobdesc" placeholder="Paste the job description or required skills..."></textarea>
+    </label>
+
+    <button type="submit">Analyze</button>
+  </form>
+
+  {% if result %}
+  <div class="result">
+    <strong>Match Score:</strong> {{ result }} <br>
+    {% if missing_skills %}
+      <strong>Missing Keywords / Skills:</strong>
+      <ul>
+        {% for s in missing_skills %}
+        <li class="danger">{{ s }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <em>No obvious missing keywords found.</em>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</body>
+</html>
